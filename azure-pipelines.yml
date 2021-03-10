@@ -1,8 +1,20 @@
 # Starter pipeline
+- task: ArtifactoryGenericDownload@3
+  inputs:
+    specSource: 'taskConfiguration'
+    failNoOp: true
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
-    restoreSolution: '**/*.sln'
+    restoreSolution: - task: ArtifactoryNuGet@2
+  inputs:
+    command: 'push'
+    artifactoryService: 'sample'
+    targetDeployRepo: 'nuget-local'
+    pathToNupkg: '*.nupkg'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'sln'
     feedsToUse: 'select'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
