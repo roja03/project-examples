@@ -21,8 +21,8 @@ steps:
   displayName: Restore NuGet Packages
   inputs:
     command: 'restore'
-    artifactoryService: '${{ parameters.artifactoryService }}'
-    targetResolveRepo: :'${{ parameters.artifactoryNuGetRestoreRepo }}'
+    artifactoryService: 'sample'
+    targetResolveRepo: :'nuget-local'
     rootPath: 'build'
     arguments: 'sources.generated.sln'
     noNuGetCache: true
