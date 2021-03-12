@@ -21,7 +21,7 @@ steps:
     command: restore
     artifactoryService: sample
     targetResolveRepo: nuget
-    solutionPath: 'nuget-example/MyLogger/MyLogger.sln'
+    solutionPath: '**\*.sln'
     collectBuildInfo: true
     includeEnvVars: true
 
