@@ -17,15 +17,14 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
-- task: ArtifactoryDotnetCore@1
-  displayName: Restore NuGet Packages
+- task: ArtifactoryNuGet@2
   inputs:
     command: 'restore'
     artifactoryService: 'sample'
-    targetResolveRepo: :'nuget-local'
-    rootPath: 'build'
-    arguments: 'sources.generated.sln'
+    targetResolveRepo: 'nuget'
+    solutionPath: '**/*.sln'
     noNuGetCache: true
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+    arguments: 'sources.generated.sln'
