@@ -27,4 +27,3 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
-    arguments: 'sources.generated.sln'
