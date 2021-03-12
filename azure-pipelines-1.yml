@@ -18,12 +18,14 @@ steps:
 - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-nuget.ArtifactoryNuGet@2
   displayName: 'Artifactory NuGet restore'
   inputs:
-    command: restore
-    artifactoryService: sample
-    targetResolveRepo: nuget
-    solutionPath: '**\*.sln'
+    command: 'restore'
+    artifactoryService: 'sample'
+    targetResolveRepo: 'nuget'
+    solutionPath: '**/*.sln'
+    noNuGetCache: true
     collectBuildInfo: true
-    includeEnvVars: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
