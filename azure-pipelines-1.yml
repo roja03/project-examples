@@ -1,0 +1,44 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: JFrog.jfrog-artifactory-vsts-extension.artifactory-nuget.ArtifactoryNuGet@2
+  displayName: 'Artifactory NuGet restore'
+  inputs:
+    command: restore
+    artifactoryService: sample
+    targetResolveRepo: nuget
+    solutionPath: 'nuget-example/MyLogger/MyLogger.sln'
+    collectBuildInfo: true
+    includeEnvVars: true
+
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    publishVstsFeed: '24aa8c93-dfa0-4938-a63c-3ff403087847'
+
+- task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
+  displayName: 'Artifactory Publish Build Info'
+  inputs:
+    artifactoryService: sample
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: '$(Parameters.ArtifactName)'
+  condition: succeededOrFailed()
