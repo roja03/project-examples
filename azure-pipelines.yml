@@ -31,7 +31,7 @@ steps:
   inputs:
     command: 'push'
     artifactoryService: 'sample'
-    targetDeployRepo: 'nuget'
+    targetDeployRepo: 'rojarm'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     status: 'Released'
