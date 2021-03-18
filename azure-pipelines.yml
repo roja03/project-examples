@@ -27,3 +27,14 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryBuildPromotion@1
+  inputs:
+    command: 'push'
+    artifactoryService: 'sample'
+    targetDeployRepo: 'nuget'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    status: 'Released'
+    includeDependencies: false
+    copy: false
+    dryRun: false
