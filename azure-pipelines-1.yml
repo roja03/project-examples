@@ -33,11 +33,6 @@ steps:
     command: push
     publishVstsFeed: '24aa8c93-dfa0-4938-a63c-3ff403087847'
 
-- task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
-  displayName: 'Artifactory Publish Build Info'
-  inputs:
-    artifactoryService: sample
-
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
