@@ -1,23 +1,22 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-- task: ArtifactoryNuGet@2
+- task: JFrog.jfrog-artifactory-vsts-extension.artifactory-nuget.ArtifactoryNuGet@2
+  displayName: 'Artifactory NuGet restore'
   inputs:
     command: 'restore'
     artifactoryService: 'sample'
@@ -27,14 +26,16 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
-- task: ArtifactoryBuildPromotion@1
+
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
   inputs:
-    command: 'push'
-    artifactoryService: 'sample'
-    targetDeployRepo: 'rojarm'
-    buildName: '$(Build.DefinitionName)'
-    buildNumber: '$(Build.BuildNumber)'
-    status: 'Released'
-    includeDependencies: false
-    copy: false
-    dryRun: false
+    command: push
+    publishVstsFeed: '24aa8c93-dfa0-4938-a63c-3ff403087847'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: '$(Parameters.ArtifactName)'
+  condition: succeededOrFailed()
