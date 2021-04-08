@@ -1,4 +1,12 @@
 # ASP.NET
+- task: ArtifactoryToolsInstaller@1
+  inputs:
+    artifactoryService: 'rojaservice'
+    cliInstallationRepo: 'mvn-maven-jcenter'
+    installCustomVersion: true
+    cliVersion: '$(jfrogCliVersion)'
+    installExtractors: true
+    extractorsInstallationRepo: 'mvn-maven-jcenter'
 # Build and test ASP.NET projects.
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
