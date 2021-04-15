@@ -1,4 +1,9 @@
 # ASP.NET
+- task: ArtifactoryGenericUpload@2
+  inputs:
+    artifactoryService: 'sample'
+    specSource: 'taskConfiguration'
+    failNoOp: true
 # Build and test ASP.NET projects.
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
