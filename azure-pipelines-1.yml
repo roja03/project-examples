@@ -25,4 +25,13 @@ steps:
   inputs:
     artifactoryService: 'sample'
     specSource: 'taskConfiguration'
+    fileSpec: |
+      {
+        "files": [
+          {
+            "pattern": "Maven-snapshot-local",
+            "target": "Maven-snapshot-local"
+          }
+        ]
+      }
     failNoOp: true
